@@ -1,0 +1,35 @@
+
+.logo-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .aircall-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: 0% 0%;
+    border-radius: 100px;
+  }
+}
+
+.login-container {
+  width: 600px;
+  padding-bottom: 50px;
+
+  .login-form {
+    width: 100%;
+  }
+}
+
+mat-form-field {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+}

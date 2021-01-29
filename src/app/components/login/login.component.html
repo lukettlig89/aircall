@@ -1,0 +1,31 @@
+<mat-card class="login-container">
+
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+
+  <div class="logo-container">
+    <img mat-card-image class="aircall-logo" src="https://images.ctfassets.net/0kz5nrpxuzuo/51NAhmYFcgHBV2hhQIBVzc/8b7f6d588507b02e70a283ca5c0e7a53/aircall-logo.svg" alt="Aircall">
+  </div>
+
+  <mat-card-content>
+    <form class="login-form" [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username" placeholder="Any text">
+        <mat-error *ngIf="form.controls.username.hasError('required')">Username is <strong>required</strong></mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Any password">
+        <mat-error *ngIf="form.controls.password.hasError('required')">Password is <strong>required</strong></mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+  </mat-card-actions>
+
+</mat-card>
