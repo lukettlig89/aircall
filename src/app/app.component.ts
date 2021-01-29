@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StoreFacade } from './store/store.facade';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'test-aircall';
+  title = 'Test Aircall';
+
+  isLogged$ = this.facade.isLogged$;
+  loading$ = this.facade.loading$;
+
+  constructor(
+    private readonly facade: StoreFacade,
+  ) {}
 }
