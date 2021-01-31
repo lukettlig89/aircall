@@ -28,6 +28,7 @@
     "@ngrx/store-devtools": "^10.1.2",
     "@types/lodash": "^4.14.168",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "ts-mockito": "^2.6.1",
     "tslib": "^2.0.0",

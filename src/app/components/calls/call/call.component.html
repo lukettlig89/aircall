@@ -1,6 +1,9 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <div class="call-container">
+
+      <span class="time-label"> {{ call.created_at | date:'shortTime'}}</span>
+
       <ng-container *ngIf="call.call_type == CallType.Voicemail; else standardCall">
         <i class="fas fa-phone-volume icon-big"></i>
       </ng-container>
@@ -21,6 +24,8 @@
       </ng-container>
 
       <span class="number">{{ call.to }}</span>
+
+      <span class="duration-label"> {{ call.duration | formatDuration }}</span>
     </div>
   </mat-expansion-panel-header>
 </mat-expansion-panel>

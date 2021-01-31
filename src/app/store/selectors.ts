@@ -33,11 +33,6 @@ const getUserInfo = createSelector(
   (state) => state?.userInfo,
 );
 
-const hasNextPage = createSelector(
-  getCallsState,
-  (state) => state?.hasNextPage,
-);
-
 const getTotalCalls = createSelector(
   getCallsState,
   (state) => state?.totalCount,
@@ -53,7 +48,6 @@ export const selectors = {
   loading,
   getToken,
   getUserInfo,
-  hasNextPage,
   getTotalCalls,
   getCalls,
 };

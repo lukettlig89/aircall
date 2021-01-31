@@ -15,9 +15,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CallsContainerComponent } from './components/calls/calls-container.component';
 import { HttpTokenInterceptor } from './core/services/http-token.interceptor';
-import { CookieService } from 'ngx-cookie-service';
 import { CallFiltersComponent } from './components/calls/call-filters/call-filters.component';
 import { CallComponent } from './components/calls/call/call.component';
+import { FormatDurationPipe } from './components/calls/format-date.pipe';
 
 const devTools = [
   StoreDevtoolsModule.instrument({
@@ -32,6 +32,7 @@ const devTools = [
     CallsContainerComponent,
     CallFiltersComponent,
     CallComponent,
+    FormatDurationPipe,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -47,7 +48,6 @@ const devTools = [
   ],
   providers: [
     Effects,
-    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,

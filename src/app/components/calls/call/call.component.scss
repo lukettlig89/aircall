@@ -1,47 +1,53 @@
 
 mat-expansion-panel {
-  margin-bottom: 10px;
+  margin: 10px 0;
 
   mat-expansion-panel-header {
-    padding: 30px 60px;
+    padding: 30px 40px;
 
     .call-container {
       display: flex;
       align-items: center;
-      padding: 0 30px;
-    }
+      padding: 0 40px 0 0;
 
-    .icon-big {
-      font-size: 34px;
-      margin-right: 50px;
-    }
-
-    .voicemail-container {
-      margin-bottom: 10px;
-
-      span {
-        margin-left: 5px;
+      .time-label {
+        font-size: 12px;
+        margin-right: 20px;
       }
-    }
 
-    .number {
-      padding: 0 10px;
-    }
+      .duration-label {
+        font-size: 12px;
+        margin-left: 30px;
+      }
 
-    .call-icon {
-      margin: 0 30px;
-    }
+      .icon-big {
+        font-size: 34px;
+        margin-right: 50px;
+      }
 
-    .red {
-      color: #981e1e;
-    }
+      .voicemail-container {
+        margin-bottom: 10px;
 
-    .green {
-      color: #51851e;
-    }
+        span {
+          margin-left: 5px;
+        }
+      }
 
-    .yellow {
-      color: #aeae4f;
+      .number {
+        padding: 0 10px;
+      }
+
+      .call-icon {
+        margin: 0 30px;
+      }
+
+      .red {
+        color: #981e1e;
+      }
+
+      .green {
+        color: #51851e;
+      }
     }
   }
 }

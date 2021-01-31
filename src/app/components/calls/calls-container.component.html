@@ -1,7 +1,8 @@
 
 <div class="call-recap">
   <mat-paginator [length]="totalCalls$ | async"
-                 [pageSize]="10">
+                 [pageSize]="defaultPageSize"
+                 (page)="pageChanged($event)">
   </mat-paginator>
 </div>
 
@@ -12,7 +13,10 @@
 
   <mat-drawer-content>
     <div class="page">
-      <mat-accordion *ngFor="let call of filteredCalls$ | async" multi>
+      <mat-accordion *ngFor="let call of filteredCalls$ | async; let i = index;" multi>
+        <ng-container *ngIf="shouldDisplayDate$(i) | async">
+          <span class="date-label">{{ call.created_at | date }}</span>
+        </ng-container>
         <call [call]="call"></call>
       </mat-accordion>
     </div>

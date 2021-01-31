@@ -18,6 +18,11 @@ mat-drawer {
   border-top: solid 1px #cacaca;
 }
 
+.date-label {
+  display: block;
+  margin: 20px 0;
+}
+
 mat-drawer-container {
   min-height: 100%;
 }
