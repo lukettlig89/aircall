@@ -4,13 +4,11 @@
     <span>{{ title }}</span>
   </mat-toolbar>
 
-  <div class="page">
-    <ng-container *ngIf="!(loading$ | async); else loadingDistractor">
-      <ng-container *ngIf="isLogged$ | async; else authForm">
-        <calls></calls>
-      </ng-container>
+  <ng-container *ngIf="!(loading$ | async); else loadingDistractor">
+    <ng-container *ngIf="isLogged$ | async; else authForm">
+      <calls-cont></calls-cont>
     </ng-container>
-  </div>
+  </ng-container>
 
 </div>
 
@@ -19,5 +17,7 @@
 </ng-template>
 
 <ng-template #loadingDistractor>
-  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  <div class="page">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  </div>
 </ng-template>

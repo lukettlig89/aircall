@@ -12,8 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Effects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule } from '@angular/common/http';
-import { CallsComponent } from './components/calls/calls.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CallsContainerComponent } from './components/calls/calls-container.component';
+import { HttpTokenInterceptor } from './core/services/http-token.interceptor';
+import { CookieService } from 'ngx-cookie-service';
+import { CallFiltersComponent } from './components/calls/call-filters/call-filters.component';
+import { CallComponent } from './components/calls/call/call.component';
 
 const devTools = [
   StoreDevtoolsModule.instrument({
@@ -25,7 +29,9 @@ const devTools = [
   declarations: [
     AppComponent,
     LoginComponent,
-    CallsComponent,
+    CallsContainerComponent,
+    CallFiltersComponent,
+    CallComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -41,6 +47,12 @@ const devTools = [
   ],
   providers: [
     Effects,
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

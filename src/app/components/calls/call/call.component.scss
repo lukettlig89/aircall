@@ -1,0 +1,47 @@
+
+mat-expansion-panel {
+  margin-bottom: 10px;
+
+  mat-expansion-panel-header {
+    padding: 30px 60px;
+
+    .call-container {
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+    }
+
+    .icon-big {
+      font-size: 34px;
+      margin-right: 50px;
+    }
+
+    .voicemail-container {
+      margin-bottom: 10px;
+
+      span {
+        margin-left: 5px;
+      }
+    }
+
+    .number {
+      padding: 0 10px;
+    }
+
+    .call-icon {
+      margin: 0 30px;
+    }
+
+    .red {
+      color: #981e1e;
+    }
+
+    .green {
+      color: #51851e;
+    }
+
+    .yellow {
+      color: #aeae4f;
+    }
+  }
+}

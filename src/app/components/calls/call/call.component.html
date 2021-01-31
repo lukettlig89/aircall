@@ -1,0 +1,30 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <div class="call-container">
+      <ng-container *ngIf="call.call_type == CallType.Voicemail; else standardCall">
+        <i class="fas fa-phone-volume icon-big"></i>
+      </ng-container>
+
+      <span class="number">{{ call.from }}</span>
+
+      <ng-container [ngSwitch]="call.direction">
+        <i *ngSwitchCase="Direction.Inbound"
+           class="fas fa-arrow-circle-left call-icon"
+           [class.red]="call.call_type === CallType.Missed || call.call_type === CallType.Voicemail"
+           [class.green]="call.call_type === CallType.Answered"
+        ></i>
+        <i *ngSwitchCase="Direction.Outbound"
+           class="fas fa-arrow-circle-right call-icon"
+           [class.red]="call.call_type === CallType.Missed || call.call_type === CallType.Voicemail"
+           [class.green]="call.call_type === CallType.Answered"
+        ></i>
+      </ng-container>
+
+      <span class="number">{{ call.to }}</span>
+    </div>
+  </mat-expansion-panel-header>
+</mat-expansion-panel>
+
+<ng-template #standardCall>
+  <i class="fas fa-phone-square-alt  icon-big"></i>
+</ng-template>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './state';
-import { login } from './actions';
+import { login, retrieveCalls } from './actions';
 import { selectors } from './selectors';
 import { LoginParams } from '../core/models/types';
 
@@ -10,6 +10,9 @@ export class StoreFacade {
 
   isLogged$ = this.store.select(selectors.isLogged);
   loading$ = this.store.select(selectors.loading);
+  calls$ = this.store.select(selectors.getCalls);
+  totalCalls$ = this.store.select(selectors.getTotalCalls);
+  hasNextPage$ = this.store.select(selectors.hasNextPage);
 
   constructor(
     public readonly store: Store<AppState>,
@@ -17,6 +20,10 @@ export class StoreFacade {
 
   login(data: LoginParams): void {
     this.store.dispatch(login({ data }));
+  }
+
+  retrieveCalls(offset: number, limit: number): void {
+    this.store.dispatch(retrieveCalls({ offset, limit }));
   }
 
 }

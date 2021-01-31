@@ -3,9 +3,19 @@ import { AppState } from './state';
 
 const getState = createFeatureSelector<AppState>('aircall');
 
-const isLogged = createSelector(
+const getUserState = createSelector(
   getState,
-  (state) => state.user?.access_token !== undefined,
+  (state) => state.user,
+);
+
+const getCallsState = createSelector(
+  getState,
+  (state) => state.calls,
+);
+
+const isLogged = createSelector(
+  getUserState,
+  (state) => state?.access_token !== undefined,
 );
 
 const loading = createSelector(
@@ -13,7 +23,37 @@ const loading = createSelector(
   (state) => state.loading,
 );
 
+const getToken = createSelector(
+  getUserState,
+  (state) => state?.access_token,
+);
+
+const getUserInfo = createSelector(
+  getUserState,
+  (state) => state?.userInfo,
+);
+
+const hasNextPage = createSelector(
+  getCallsState,
+  (state) => state?.hasNextPage,
+);
+
+const getTotalCalls = createSelector(
+  getCallsState,
+  (state) => state?.totalCount,
+);
+
+const getCalls = createSelector(
+  getCallsState,
+  (state) => state?.nodes,
+);
+
 export const selectors = {
   isLogged,
   loading,
+  getToken,
+  getUserInfo,
+  hasNextPage,
+  getTotalCalls,
+  getCalls,
 };

@@ -1,0 +1,21 @@
+
+<div class="call-recap">
+  <mat-paginator [length]="totalCalls$ | async"
+                 [pageSize]="10">
+  </mat-paginator>
+</div>
+
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <call-filters (filterChanged)="applyFilters($event)"></call-filters>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <div class="page">
+      <mat-accordion *ngFor="let call of filteredCalls$ | async" multi>
+        <call [call]="call"></call>
+      </mat-accordion>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+

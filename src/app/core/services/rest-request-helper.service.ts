@@ -20,9 +20,12 @@ export class RestRequestHelperService {
     private readonly httpClient: HttpClient,
   ) {}
 
+  get<V>(path: string): Observable<V> {
+    return this.httpClient.request<V>(HttpMethod.GET, path);
+  }
 
   post<T, V>(path: string, body: T, options?: HttpParamsOptions): Observable<V> {
-    return this.httpClient.request<V>(HttpMethod.POST, `${basePath}/${path}`, {...options, body});
+    return this.httpClient.request<V>(HttpMethod.POST, path, {...options, body});
   }
 
 }

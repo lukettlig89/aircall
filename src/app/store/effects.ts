@@ -1,12 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { AppAction, changeLoading, login, loginFailure, loginSuccess } from './actions';
-import { AppState } from './state';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import {
+  AppAction,
+  changeLoading,
+  login,
+  loginFailure,
+  loginSuccess,
+  refreshToken,
+  retrieveCalls,
+  retrieveCallsFailure,
+  retrieveCallsSuccess
+} from './actions';
+import { AppState, UserInfo } from './state';
+import { catchError, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { RestRequestHelperService } from '../core/services/rest-request-helper.service';
-import { Routes } from '../core/configs/routes';
-import { LoginParams, LoginResponse } from '../core/models/types';
+import { basePath, Routes } from '../core/configs/routes';
+import { CallsResponse, LoginParams, LoginResponse } from '../core/models/types';
+import { of } from 'rxjs';
+import { defaultItemPerPage } from '../core/configs/defaults';
+import { selectors } from './selectors';
 
 @Injectable()
 export class Effects {
@@ -15,13 +28,45 @@ export class Effects {
     .pipe(
       ofType(login.type),
       map((action) => action.data),
-      switchMap((params) => this.restRequestHelperService.post<LoginParams, LoginResponse>(Routes.LOGIN, params)),
-      tap(console.warn),
-      map((response) => loginSuccess({ response })),
+      switchMap((params) =>
+        this.restRequestHelperService.post<LoginParams, LoginResponse>(`${basePath}/${Routes.LOGIN}`, params)
+          .pipe(map((response) => ({ params, response }))),
+      ),
+      map(({ params, response }) => loginSuccess({
+        response: { ...response, userInfo: {...response.user, password: params.password } },
+      })),
       catchError((err) => {
-        console.warn(`Login call failed with error ${err}`);
+        console.warn(`Login call failed with error ${err.message}`);
 
-        return loginFailure;
+        return of(loginFailure());
+      })
+    ));
+
+  retrieveCalls$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(retrieveCalls.type),
+      switchMap((payload) =>
+        this.restRequestHelperService.get<CallsResponse>(`${basePath}/${Routes.CALLS}?offset=${payload.offset}&limit=${payload.limit}`),
+      ),
+      map((response) => retrieveCallsSuccess({ response })),
+      catchError((err) => {
+        console.warn(`Get calls failed with error ${err.message}`);
+
+        return of(retrieveCallsFailure());
+      })
+    ));
+
+  retrieveInitialCalls$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(loginSuccess.type),
+      switchMap((_) =>
+        this.restRequestHelperService.get<CallsResponse>(`${basePath}/${Routes.CALLS}?offset=0&limit=${defaultItemPerPage}`),
+      ),
+      map((response) => retrieveCallsSuccess({ response })),
+      catchError((err) => {
+        console.warn(`Get calls failed with error ${err.message}`);
+
+        return of(retrieveCallsFailure());
       })
     ));
 
@@ -38,6 +83,14 @@ export class Effects {
         loginFailure.type,
       ),
       map(() => changeLoading({ loading: false })),
+    ));
+
+  refreshToken$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(refreshToken.type),
+      withLatestFrom(this.store.select(selectors.getUserInfo)),
+      filter(([_, userInfo]) => userInfo !== undefined),
+      map(([token, userInfo]) => loginSuccess({ response: { access_token: token, userInfo: userInfo as UserInfo }} )),
     ));
 
   constructor(
