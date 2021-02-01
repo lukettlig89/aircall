@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreFacade } from '../../store/store.facade';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'login-form',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']

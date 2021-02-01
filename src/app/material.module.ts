@@ -8,6 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatCheckboxModule,
+    MatDividerModule,
   ],
   exports: [
     MatExpansionModule,
@@ -30,6 +32,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatCheckboxModule,
+    MatDividerModule,
   ],
 })
 export class MaterialModule {}

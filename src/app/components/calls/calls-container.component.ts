@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { isSameDay } from '../../core/utils/date-utils';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'calls-cont',
   templateUrl: './calls-container.component.html',
   styleUrls: ['./calls-container.component.scss']
@@ -55,13 +56,17 @@ export class CallsContainerComponent implements OnInit {
           if (index === 0) {
             return true;
           }
-          if (calls[index] === undefined || calls[index-1] === undefined) {
+          if (calls[index] === undefined || calls[index - 1] === undefined) {
             return false;
           }
 
           return isSameDay(calls[index].created_at, calls[index - 1].created_at);
         })
       );
+  }
+
+  changeArchiveStatus(callId: string): void {
+    this.facade.changeArchiveStatus(callId);
   }
 
 }

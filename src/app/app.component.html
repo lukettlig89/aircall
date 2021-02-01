@@ -4,7 +4,7 @@
     <span>{{ title }}</span>
   </mat-toolbar>
 
-  <ng-container *ngIf="!(loading$ | async); else loadingDistractor">
+  <ng-container *ngIf="(loading$ | async) === false; else loadingDistractor">
     <ng-container *ngIf="isLogged$ | async; else authForm">
       <calls-cont></calls-cont>
     </ng-container>

@@ -1,4 +1,4 @@
-import { CallsResponse, LoginResponse, User } from '../core/models/types';
+import { CallsResponse, User } from '../core/models/types';
 
 export const initialState: AppState = Object.freeze({
   loading: false,
@@ -7,7 +7,7 @@ export const initialState: AppState = Object.freeze({
 export interface AppState {
   user?: UserState;
   loading: boolean;
-  calls?: CallsResponse;
+  calls?: CallsState;
 }
 
 export interface UserState {
@@ -18,3 +18,5 @@ export interface UserState {
 export interface UserInfo extends User {
   password: string;
 }
+
+export type CallsState = CallsResponse;

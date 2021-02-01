@@ -26,10 +26,34 @@
       <span class="number">{{ call.to }}</span>
 
       <span class="duration-label"> {{ call.duration | formatDuration }}</span>
+
+      <span class="archive-icon" (click)="changeArchiveStatus($event)">
+        <i class="fa-folder-open"
+           [class.fas]="call.is_archived"
+           [class.far]="!call.is_archived"
+           [title]="call.is_archived ? 'unarchive' : 'archive' "
+        ></i>
+      </span>
     </div>
   </mat-expansion-panel-header>
+
+  <div class="call-content">
+    <span><b>via:</b> {{ call.via }}</span>
+    <ng-container *ngIf="call.notes.length > 0; else noNotes">
+      <span><b>Notes:</b></span>
+      <ng-container *ngFor="let note of call.notes; let isLast = last">
+        <p>{{ note.content }}</p>
+        <mat-divider *ngIf="!isLast"></mat-divider>
+      </ng-container>
+    </ng-container>
+  </div>
+
 </mat-expansion-panel>
 
 <ng-template #standardCall>
   <i class="fas fa-phone-square-alt  icon-big"></i>
+</ng-template>
+
+<ng-template #noNotes>
+  <span>There are no notes for this call.</span>
 </ng-template>

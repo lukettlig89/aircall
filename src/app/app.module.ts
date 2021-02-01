@@ -18,6 +18,7 @@ import { HttpTokenInterceptor } from './core/services/http-token.interceptor';
 import { CallFiltersComponent } from './components/calls/call-filters/call-filters.component';
 import { CallComponent } from './components/calls/call/call.component';
 import { FormatDurationPipe } from './components/calls/format-date.pipe';
+import { CallLegendComponent } from './components/calls/call-legend/call-legend.component';
 
 const devTools = [
   StoreDevtoolsModule.instrument({
@@ -33,6 +34,7 @@ const devTools = [
     CallFiltersComponent,
     CallComponent,
     FormatDurationPipe,
+    CallLegendComponent,
   ],
   imports: [
     BrowserAnimationsModule,

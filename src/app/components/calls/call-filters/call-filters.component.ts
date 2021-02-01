@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Filters } from '../call/filters';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'call-filters',
   templateUrl: './call-filters.component.html',
   styleUrls: ['./call-filters.component.scss']

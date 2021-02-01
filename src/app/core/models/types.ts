@@ -22,6 +22,8 @@ export interface CallsResponse {
   nodes: Call[];
 }
 
+export type ArchiveCallResponse = Call;
+
 export interface Call {
   id: string;
   direction: Direction;

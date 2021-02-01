@@ -9,6 +9,7 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
     <call-filters (filterChanged)="applyFilters($event)"></call-filters>
+    <call-legend></call-legend>
   </mat-drawer>
 
   <mat-drawer-content>
@@ -17,7 +18,7 @@
         <ng-container *ngIf="shouldDisplayDate$(i) | async">
           <span class="date-label">{{ call.created_at | date }}</span>
         </ng-container>
-        <call [call]="call"></call>
+        <call [call]="call" (toggleArchive)="changeArchiveStatus(call.id)"></call>
       </mat-accordion>
     </div>
   </mat-drawer-content>

@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
   AppAction,
+  archiveCall, archiveCallFailure,
+  archiveCallSuccess,
   changeLoading,
   login,
   loginFailure,
@@ -16,7 +18,7 @@ import { AppState, UserInfo } from './state';
 import { catchError, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { RestRequestHelperService } from '../core/services/rest-request-helper.service';
 import { basePath, Routes } from '../core/configs/routes';
-import { CallsResponse, LoginParams, LoginResponse } from '../core/models/types';
+import { ArchiveCallResponse, CallsResponse, LoginParams, LoginResponse } from '../core/models/types';
 import { of } from 'rxjs';
 import { defaultItemPerPage } from '../core/configs/defaults';
 import { selectors } from './selectors';
@@ -67,6 +69,20 @@ export class Effects {
         console.warn(`Get calls failed with error ${err.message}`);
 
         return of(retrieveCallsFailure());
+      })
+    ));
+
+  archiveCall$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(archiveCall.type),
+      switchMap(({ callId }) =>
+        this.restRequestHelperService.put<ArchiveCallResponse>(`${basePath}/${Routes.CALLS}/${callId}/${Routes.ARCHIVE_CALL}`),
+      ),
+      map((response) => archiveCallSuccess({ response })),
+      catchError((err) => {
+        console.warn(`Failed to archive call, error ${err.message}`);
+
+        return of(archiveCallFailure());
       })
     ));
 

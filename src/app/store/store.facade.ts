@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './state';
-import { login, retrieveCalls } from './actions';
+import { archiveCall, login, retrieveCalls } from './actions';
 import { selectors } from './selectors';
 import { Call, LoginParams } from '../core/models/types';
 import { filter, map } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class StoreFacade {
       map((calls: Call[]) => calls.slice().sort((a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime())),
     );
+  token$ = this.store.select(selectors.getToken);
   totalCalls$ = this.store.select(selectors.getTotalCalls);
 
   constructor(
@@ -30,6 +31,10 @@ export class StoreFacade {
 
   retrieveCalls(offset: number, limit: number): void {
     this.store.dispatch(retrieveCalls({ offset, limit }));
+  }
+
+  changeArchiveStatus(callId: string): void {
+    this.store.dispatch(archiveCall({ callId }));
   }
 
 }
