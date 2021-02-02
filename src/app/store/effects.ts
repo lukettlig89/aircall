@@ -78,7 +78,7 @@ export class Effects {
       switchMap(({ callId }) =>
         this.restRequestHelperService.put<ArchiveCallResponse>(`${basePath}/${Routes.CALLS}/${callId}/${Routes.ARCHIVE_CALL}`),
       ),
-      map((response) => archiveCallSuccess({ response })),
+      map((response) => archiveCallSuccess()),
       catchError((err) => {
         console.warn(`Failed to archive call, error ${err.message}`);
 

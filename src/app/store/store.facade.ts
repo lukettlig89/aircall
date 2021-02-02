@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './state';
-import { archiveCall, login, retrieveCalls } from './actions';
+import { archiveCall, login, retrieveCalls, updateCall } from './actions';
 import { selectors } from './selectors';
 import { Call, LoginParams } from '../core/models/types';
 import { filter, map } from 'rxjs/operators';
@@ -35,6 +35,10 @@ export class StoreFacade {
 
   changeArchiveStatus(callId: string): void {
     this.store.dispatch(archiveCall({ callId }));
+  }
+
+  updateCall(call: Call): void {
+    this.store.dispatch(updateCall({ call }));
   }
 
 }

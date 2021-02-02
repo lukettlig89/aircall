@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState, UserState } from './state';
-import { archiveCallSuccess, changeLoading, loginSuccess, retrieveCallsSuccess } from './actions';
+import { changeLoading, loginSuccess, retrieveCallsSuccess, updateCall } from './actions';
 import { CallsState } from './state';
 import { Call } from '../core/models';
 
@@ -27,11 +27,11 @@ const callsReducer = createReducer<CallsState | undefined>(
     (_, { response }): CallsState | undefined => response,
   ),
   on(
-    archiveCallSuccess,
-    (state, { response }): CallsState | undefined => {
-      const callsWithoutCallChanged = state?.nodes.filter((call) => call.id !== response?.id) ?? [];
+    updateCall,
+    (state, { call }): CallsState | undefined => {
+      const callsWithoutCallChanged = state?.nodes.filter((c) => c.id !== call?.id) ?? [];
 
-      return {...state as CallsState, nodes: [...callsWithoutCallChanged, response as Call]};
+      return {...state as CallsState, nodes: [...callsWithoutCallChanged, call as Call]};
     },
   ),
 );

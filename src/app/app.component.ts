@@ -4,6 +4,8 @@ import Pusher from 'pusher-js';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { isNil } from 'lodash';
+import { Call } from './core/models';
+import { pusherKey } from './core/configs/defaults';
 
 @Component({
   selector: 'app-root',
@@ -29,13 +31,22 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy),
       )
       .subscribe((token) => {
-        const pusher = new Pusher(token as string, { authEndpoint: 'https://frontend-test-api.aircall.io/pusher/auth'});
-        pusher.subscribe('private-aircall');
-
-        pusher.connection.bind('update-call', (call: any) => {
-          console.warn('call changes ', call);
+        const pusher = new Pusher(pusherKey, {
+          cluster: 'eu',
+          authEndpoint: 'https://frontend-test-api.aircall.io/pusher/auth',
+          auth: {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
         });
-    });
+
+        const channel = pusher.subscribe('private-aircall');
+
+        channel.bind('update-call', (call: Call) => {
+          this.facade.updateCall(call);
+        });
+      });
   }
 
   ngOnDestroy(): void {

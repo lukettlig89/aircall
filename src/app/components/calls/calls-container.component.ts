@@ -60,7 +60,7 @@ export class CallsContainerComponent implements OnInit {
             return false;
           }
 
-          return isSameDay(calls[index].created_at, calls[index - 1].created_at);
+          return !isSameDay(calls[index].created_at, calls[index - 1].created_at);
         })
       );
   }

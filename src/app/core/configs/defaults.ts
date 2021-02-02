@@ -1,2 +1,2 @@
 export const defaultItemPerPage = 10;
-export const tokenKey = 'aircall-jwt_token';
+export const pusherKey = 'd44e3d910d38a928e0be';

@@ -1,5 +1,5 @@
 import { createAction, props, union } from '@ngrx/store';
-import { ArchiveCallResponse, CallsResponse, LoginParams } from '../core/models/types';
+import { ArchiveCallResponse, Call, CallsResponse, LoginParams } from '../core/models/types';
 import { UserState } from './state';
 
 export const changeLoading = createAction(
@@ -41,12 +41,16 @@ export const archiveCall = createAction(
 );
 
 export const archiveCallSuccess = createAction(
-  '[Archieve call success]',
-  props<{ response?: ArchiveCallResponse }>(),
+  '[Archive call success]',
 );
 
 export const archiveCallFailure = createAction(
   '[Archieve call failure]'
+);
+
+export const updateCall = createAction(
+  '[Update call]',
+  props<{ call?: Call }>(),
 );
 
 export const refreshToken = createAction(
