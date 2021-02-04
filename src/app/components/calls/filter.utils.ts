@@ -6,6 +6,9 @@ export const filterCalls = (filters: Filters[], calls?: Call[]): Call[] | undefi
   if (calls === undefined) {
     return undefined;
   }
+  if (filters?.length === 0) {
+    return calls;
+  }
 
   return calls.filter((call) =>
     // @ts-ignore

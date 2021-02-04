@@ -1,35 +1,55 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { instance, mock, when } from 'ts-mockito';
 import { AppComponent } from './app.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Subject } from 'rxjs';
+import { AppAction } from './store/actions';
+import { initialState } from './store/state';
+import { StoreFacade } from './store/store.facade';
+import { AppModule } from './app.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  const storeFacadeMock = mock(StoreFacade);
+  const actions = new Subject<AppAction>();
+  const tokenEvents = new Subject<string | undefined>();
+
   beforeEach(async () => {
+    when(storeFacadeMock.token$).thenReturn(tokenEvents.asObservable());
+
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+      imports: [ AppModule, RouterTestingModule ],
+      providers: [
+        provideMockStore({ initialState }),
+        provideMockActions(() => actions),
+        { provide: StoreFacade, useFactory: () => instance(storeFacadeMock) }
+      ]
+    })
+    .compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
 
-  it(`should have as title 'test-aircall'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('test-aircall');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('test-aircall app is running!');
+  });
+
+  it('should create and subscribe to the pusher when the token changes', (done) => {
+    const spy = jest.spyOn(component, 'createAndSubscribeToPusher');
+
+    tokenEvents.subscribe(() => {
+      // then
+      expect(spy).toHaveBeenCalledWith('my new token');
+      done();
+    });
+
+    // when
+    component.ngOnInit();
+    tokenEvents.next('my new token');
   });
 });

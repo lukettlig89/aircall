@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
   AppAction,
-  archiveCall, archiveCallFailure,
+  archiveCall,
   archiveCallSuccess,
   changeLoading,
   login,
@@ -11,17 +11,18 @@ import {
   loginSuccess,
   refreshToken,
   retrieveCalls,
-  retrieveCallsFailure,
   retrieveCallsSuccess
 } from './actions';
 import { AppState, UserInfo } from './state';
-import { catchError, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { RestRequestHelperService } from '../core/services/rest-request-helper.service';
 import { basePath, Routes } from '../core/configs/routes';
 import { ArchiveCallResponse, CallsResponse, LoginParams, LoginResponse } from '../core/models/types';
-import { of } from 'rxjs';
 import { defaultItemPerPage } from '../core/configs/defaults';
 import { selectors } from './selectors';
+import { Router } from '@angular/router';
+import { ErrorService } from '../core/services/error.service';
+import { of } from 'rxjs';
 
 @Injectable()
 export class Effects {
@@ -35,13 +36,13 @@ export class Effects {
           .pipe(map((response) => ({ params, response }))),
       ),
       map(({ params, response }) => loginSuccess({
-        response: { ...response, userInfo: {...response.user, password: params.password } },
+        response: { access_token: response.access_token, userInfo: {...response.user, password: params.password } },
       })),
       catchError((err) => {
-        console.warn(`Login call failed with error ${err.message}`);
+        this.errorService.notifyError(err);
 
         return of(loginFailure());
-      })
+      }),
     ));
 
   retrieveCalls$ = createEffect(() => this.actions$
@@ -52,10 +53,10 @@ export class Effects {
       ),
       map((response) => retrieveCallsSuccess({ response })),
       catchError((err) => {
-        console.warn(`Get calls failed with error ${err.message}`);
+        this.errorService.notifyError(err);
 
-        return of(retrieveCallsFailure());
-      })
+        throw err;
+      }),
     ));
 
   retrieveInitialCalls$ = createEffect(() => this.actions$
@@ -64,12 +65,15 @@ export class Effects {
       switchMap((_) =>
         this.restRequestHelperService.get<CallsResponse>(`${basePath}/${Routes.CALLS}?offset=0&limit=${defaultItemPerPage}`),
       ),
+      tap(() => {
+        this.router.navigateByUrl('/calls');
+      }),
       map((response) => retrieveCallsSuccess({ response })),
       catchError((err) => {
-        console.warn(`Get calls failed with error ${err.message}`);
+        this.errorService.notifyError(err);
 
-        return of(retrieveCallsFailure());
-      })
+        throw err;
+      }),
     ));
 
   archiveCall$ = createEffect(() => this.actions$
@@ -80,10 +84,10 @@ export class Effects {
       ),
       map((response) => archiveCallSuccess()),
       catchError((err) => {
-        console.warn(`Failed to archive call, error ${err.message}`);
+        this.errorService.notifyError(err);
 
-        return of(archiveCallFailure());
-      })
+        throw err;
+      }),
     ));
 
   showLoadingDistractor$ = createEffect(() => this.actions$
@@ -113,6 +117,8 @@ export class Effects {
     private readonly restRequestHelperService: RestRequestHelperService,
     private readonly actions$: Actions<AppAction>,
     private readonly store: Store<AppState>,
+    private readonly errorService: ErrorService,
+    private readonly router: Router,
   ) {}
 
 }

@@ -13,12 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Effects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { CallsContainerComponent } from './components/calls/calls-container.component';
-import { HttpTokenInterceptor } from './core/services/http-token.interceptor';
-import { CallFiltersComponent } from './components/calls/call-filters/call-filters.component';
-import { CallComponent } from './components/calls/call/call.component';
-import { FormatDurationPipe } from './components/calls/format-date.pipe';
-import { CallLegendComponent } from './components/calls/call-legend/call-legend.component';
+import { HttpTokenInterceptor } from './core/interceptors/http-token.interceptor';
+import { CallsContainerModule } from './components/calls/calls-container.module';
+import { ErrorSnackBarComponent } from './components/error-snack-bar/error-snack-bar.component';
 
 const devTools = [
   StoreDevtoolsModule.instrument({
@@ -30,13 +27,10 @@ const devTools = [
   declarations: [
     AppComponent,
     LoginComponent,
-    CallsContainerComponent,
-    CallFiltersComponent,
-    CallComponent,
-    FormatDurationPipe,
-    CallLegendComponent,
+    ErrorSnackBarComponent,
   ],
   imports: [
+    CallsContainerModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
@@ -45,7 +39,7 @@ const devTools = [
     MaterialModule,
     StoreModule.forRoot({}),
     StoreModule.forFeature('aircall', reducers),
-    EffectsModule.forRoot([Effects]),
+    EffectsModule.forRoot([ Effects ]),
     ...devTools,
   ],
   providers: [
@@ -56,6 +50,7 @@ const devTools = [
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}

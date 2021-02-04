@@ -1,5 +1,5 @@
 import { createAction, props, union } from '@ngrx/store';
-import { ArchiveCallResponse, Call, CallsResponse, LoginParams } from '../core/models/types';
+import { Call, CallsResponse, LoginParams } from '../core/models/types';
 import { UserState } from './state';
 
 export const changeLoading = createAction(
@@ -31,10 +31,6 @@ export const retrieveCallsSuccess = createAction(
   props<{ response?: CallsResponse }>(),
 );
 
-export const retrieveCallsFailure = createAction(
-  '[Retrieve calls failure]'
-);
-
 export const archiveCall = createAction(
   '[Change archive status]',
   props<{ callId: string }>(),
@@ -42,10 +38,6 @@ export const archiveCall = createAction(
 
 export const archiveCallSuccess = createAction(
   '[Archive call success]',
-);
-
-export const archiveCallFailure = createAction(
-  '[Archieve call failure]'
 );
 
 export const updateCall = createAction(
@@ -64,10 +56,8 @@ const actions = union({
   loginFailure,
   retrieveCalls,
   retrieveCallsSuccess,
-  retrieveCallsFailure,
   archiveCall,
   archiveCallSuccess,
-  archiveCallFailure,
 });
 
 export type AppAction = typeof actions;

@@ -5,12 +5,12 @@ const getState = createFeatureSelector<AppState>('aircall');
 
 const getUserState = createSelector(
   getState,
-  (state) => state.user,
+  (state) => state?.user,
 );
 
 const getCallsState = createSelector(
   getState,
-  (state) => state.calls,
+  (state) => state?.calls,
 );
 
 const isLogged = createSelector(

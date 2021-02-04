@@ -3,7 +3,7 @@ import { StoreFacade } from '../../store/store.facade';
 import { defaultItemPerPage } from '../../core/configs/defaults';
 import { Filters } from './call/filters';
 import { from, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Call } from '../../core/models';
 import { filterCalls } from './filter.utils';
 import { PageEvent } from '@angular/material/paginator';
@@ -17,7 +17,6 @@ import { isSameDay } from '../../core/utils/date-utils';
 })
 export class CallsContainerComponent implements OnInit {
 
-  calls$ = this.facade.calls$;
   totalCalls$ = this.facade.totalCalls$;
 
   // @ts-ignore
@@ -29,7 +28,7 @@ export class CallsContainerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.filteredCalls$ = this.calls$;
+    this.filteredCalls$ = this.facade.calls$;
   }
 
   applyFilters(filters: Filters[]): void {

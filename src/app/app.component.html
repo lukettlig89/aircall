@@ -6,9 +6,11 @@
 
   <ng-container *ngIf="(loading$ | async) === false; else loadingDistractor">
     <ng-container *ngIf="isLogged$ | async; else authForm">
-      <calls-cont></calls-cont>
+      <router-outlet></router-outlet>
     </ng-container>
   </ng-container>
+
+  <error-snack-bar></error-snack-bar>
 
 </div>
 

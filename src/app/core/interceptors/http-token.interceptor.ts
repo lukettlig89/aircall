@@ -6,7 +6,7 @@ import { catchError, filter, first, map, mergeMap, switchMap, tap, withLatestFro
 import { AppState, UserInfo } from '../../store/state';
 import { selectors } from '../../store/selectors';
 import { LoginParams, LoginResponse } from '../models/types';
-import { RestRequestHelperService } from './rest-request-helper.service';
+import { RestRequestHelperService } from '../services/rest-request-helper.service';
 import { basePath, Routes } from '../configs/routes';
 import { refreshToken } from '../../store/actions';
 

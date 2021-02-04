@@ -31,22 +31,26 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy),
       )
       .subscribe((token) => {
-        const pusher = new Pusher(pusherKey, {
-          cluster: 'eu',
-          authEndpoint: 'https://frontend-test-api.aircall.io/pusher/auth',
-          auth: {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        });
-
-        const channel = pusher.subscribe('private-aircall');
-
-        channel.bind('update-call', (call: Call) => {
-          this.facade.updateCall(call);
-        });
+        this.createAndSubscribeToPusher(token as string);
       });
+  }
+
+  createAndSubscribeToPusher(token: string): void {
+    const pusher = new Pusher(pusherKey, {
+      cluster: 'eu',
+      authEndpoint: 'https://frontend-test-api.aircall.io/pusher/auth',
+      auth: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    });
+
+    const channel = pusher.subscribe('private-aircall');
+
+    channel.bind('update-call', (call: Call) => {
+      this.facade.updateCall(call);
+    });
   }
 
   ngOnDestroy(): void {
