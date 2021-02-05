@@ -13,6 +13,7 @@ export class CallComponent {
   // @ts-ignore
   @Input() call: Call;
   @Output() readonly toggleArchive = new EventEmitter<void>();
+  @Output() readonly viewCallDetails = new EventEmitter<void>();
 
   Direction = Direction;
   CallType = CallType;
@@ -20,5 +21,9 @@ export class CallComponent {
   changeArchiveStatus(event: UIEvent): void {
     event.stopPropagation();
     this.toggleArchive.next();
+  }
+
+  openCall(): void {
+    this.viewCallDetails.next();
   }
 }

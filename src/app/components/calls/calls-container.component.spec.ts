@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { CallsContainerComponent } from './calls-container.component';
 import { StoreFacade } from '../../store/store.facade';
@@ -10,12 +10,18 @@ import { of, Subject } from 'rxjs';
 import { Call } from '../../core/models';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CallsContainerModule } from './calls-container.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('CallsComponent', () => {
   let component: CallsContainerComponent;
   let fixture: ComponentFixture<CallsContainerComponent>;
   const storeFacadeMock = mock(StoreFacade);
   const callsEvents = new Subject<Call[]>();
+
+  const fakeRoutes = [
+    { path: 'call', redirectTo: '/' },
+  ];
 
   beforeEach(async () => {
     when(storeFacadeMock.calls$).thenReturn(callsEvents.asObservable());
@@ -24,6 +30,7 @@ describe('CallsComponent', () => {
       imports: [
         BrowserDynamicTestingModule,
         CallsContainerModule,
+        RouterTestingModule.withRoutes(fakeRoutes),
       ],
       providers: [
         provideMockStore({ initialState }),
@@ -101,4 +108,18 @@ describe('CallsComponent', () => {
       callsEvents.next(calls);
     });
   });
+
+  it('should navigate to "/call" when clicking on call details', fakeAsync(() => {
+    const spy = jest.spyOn(TestBed.inject(Router), 'navigateByUrl');
+
+    // when
+    component.navigateToCall('callId');
+    tick();
+
+    const spyParams: any = (spy.mock.calls[0][0] as any).root.children.primary.segments[0];
+
+    // then
+    expect(spyParams.path).toBe('call');
+    expect(spyParams.parameters.id).toBe('callId');
+  }));
 });

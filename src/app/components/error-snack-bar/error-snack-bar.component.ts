@@ -8,7 +8,7 @@ const defaultErrorMessage = 'Ops, something went wrong. Please retry.';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'error-snack-bar',
-  templateUrl: './error-snack-bar.component.html',
+  template: '',
   styleUrls: ['./error-snack-bar.component.scss']
 })
 export class ErrorSnackBarComponent implements OnInit{

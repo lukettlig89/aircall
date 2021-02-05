@@ -39,7 +39,6 @@ describe('Effects', () => {
 
     effects = TestBed.inject(Effects);
     store = TestBed.inject(MockStore);
-
   }));
 
   describe('login', () => {

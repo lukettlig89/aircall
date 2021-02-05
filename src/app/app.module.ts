@@ -16,6 +16,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpTokenInterceptor } from './core/interceptors/http-token.interceptor';
 import { CallsContainerModule } from './components/calls/calls-container.module';
 import { ErrorSnackBarComponent } from './components/error-snack-bar/error-snack-bar.component';
+import { CallDetailModule } from './components/call-detail/call-detail.module';
 
 const devTools = [
   StoreDevtoolsModule.instrument({
@@ -30,6 +31,7 @@ const devTools = [
     ErrorSnackBarComponent,
   ],
   imports: [
+    CallDetailModule,
     CallsContainerModule,
     BrowserAnimationsModule,
     BrowserModule,

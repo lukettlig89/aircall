@@ -38,6 +38,12 @@
   </mat-expansion-panel-header>
 
   <div class="call-content">
+    <mat-divider></mat-divider>
+
+    <div class="call-action">
+      <button mat-raised-button color="primary" (click)="openCall()">View details</button>
+    </div>
+
     <span><b>via:</b> {{ call.via }}</span>
     <ng-container *ngIf="call.notes.length > 0; else noNotes">
       <span><b>Notes:</b></span>

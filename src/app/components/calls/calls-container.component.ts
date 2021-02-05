@@ -8,6 +8,7 @@ import { Call } from '../../core/models';
 import { filterCalls } from './filter.utils';
 import { PageEvent } from '@angular/material/paginator';
 import { isSameDay } from '../../core/utils/date-utils';
+import { Router } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -25,6 +26,7 @@ export class CallsContainerComponent implements OnInit {
 
   constructor(
     private readonly facade: StoreFacade,
+    private readonly router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -68,4 +70,7 @@ export class CallsContainerComponent implements OnInit {
     this.facade.changeArchiveStatus(callId);
   }
 
+  navigateToCall(callId: string): void {
+    this.router.navigate(['/call', { id: callId }]);
+  }
 }
