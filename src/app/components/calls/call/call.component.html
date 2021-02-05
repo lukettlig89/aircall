@@ -1,6 +1,6 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
-    <div class="call-container">
+    <div class="call-container" uitestid="call">
 
       <span class="time-label"> {{ call.created_at | date:'shortTime'}}</span>
 
@@ -31,7 +31,8 @@
         <i class="fa-folder-open"
            [class.fas]="call.is_archived"
            [class.far]="!call.is_archived"
-           [title]="call.is_archived ? 'unarchive' : 'archive' "
+           [title]="call.is_archived ? 'unarchive' : 'archive'"
+           uitestid="archive-button"
         ></i>
       </span>
     </div>
@@ -41,7 +42,7 @@
     <mat-divider></mat-divider>
 
     <div class="call-action">
-      <button mat-raised-button color="primary" (click)="openCall()">View details</button>
+      <button mat-raised-button color="primary" (click)="openCall()" uitestid="view-details">View details</button>
     </div>
 
     <span><b>via:</b> {{ call.via }}</span>

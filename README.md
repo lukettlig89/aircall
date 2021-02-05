@@ -15,7 +15,7 @@ Run `yarn test` to execute the unit tests via Jest.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run the server locally and `ng e2e` to execute the end-to-end tests via [TestCafe](https://devexpress.github.io/testcafe/).
 
 ## Routes
 The UI has 3 different routes: 
