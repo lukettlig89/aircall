@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 50px 20px;
+}
+
+.call-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+
+  .call-card {
+    width: 800px;
+    padding: 30px 50px;
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+  }
+
+}

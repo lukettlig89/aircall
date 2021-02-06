@@ -25,9 +25,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MaterialModule
   ],
-  exports: [
-    CallsContainerComponent,
-  ],
+    exports: [
+        CallsContainerComponent,
+        FormatDurationPipe,
+    ],
 })
 export class CallsContainerModule {
 }

@@ -1,1 +1,1 @@
-<call-detail [call]="call$ | async"></call-detail>
+<call-detail [call]="call$ | async" (archived)="archive($event)"></call-detail>

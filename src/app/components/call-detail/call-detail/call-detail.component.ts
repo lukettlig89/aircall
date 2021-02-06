@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Call } from '../../../core/models';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Call, CallType, Direction, Note } from '../../../core/models';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -9,6 +9,12 @@ import { Call } from '../../../core/models';
 })
 export class CallDetailComponent {
 
-  @Input() call: Call | null = null;
+  @Input() call?: Call | null;
+
+  @Output() readonly archived = new EventEmitter<string>();
+
+  archive(): void {
+    this.archived.emit(this.call?.id);
+  }
 
 }

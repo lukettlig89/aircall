@@ -69,6 +69,7 @@ test('Should archive/unarchive the first call', async t => {
     .nth(0);
 
   await t
+    .click(Selector(Selectors.NextPage)) // calls at page 1 returns 404
     .click(Selector(Selectors.NextPage)); // calls at page 1 returns 404
 
   const className = await firstCall.find(Selectors.ArchiveButton).getAttribute('class');

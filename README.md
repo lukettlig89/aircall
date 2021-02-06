@@ -1,4 +1,5 @@
 # TestAircall
+This project has been generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
 ## Development
 
@@ -17,6 +18,9 @@ Run `yarn test` to execute the unit tests via Jest.
 
 Run the server locally and `ng e2e` to execute the end-to-end tests via [TestCafe](https://devexpress.github.io/testcafe/).
 
+## UI
+UI components are made with [Angular material](https://material.angular.io/) 
+
 ## Routes
 The UI has 3 different routes: 
 
@@ -32,13 +36,12 @@ The project has been made with Angular 11.
 - /core - folder containing all the configs, guards, interceptors, models, shared utils and services.
 - /store - folder containing the ngRx store (reducers, effects, selectors and actions). The store is accessible trough a facade that mask the implementation to the consumer (app).
   
-This project has been generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
 ## Rest calls
 
-All interactions with the backend are done by passing through the ngRx store. 
-The component dispatch an action and through a side effect the rest call will be performed, the data will be pushed in the state, and the selectors will propagate the data to the presentational components.
+All interactions with the backend are done through the ngRx store. 
+The component dispatch an action and through a side effect the rest call will be performed, the results will be pushed into the state, and the selectors will propagate the data to the presentational components.
 In case the call returns an error this will be catch and notified to the ui trough the ErrorService.
 
-Note: JWT token received from the backend will be injected through an interceptor which intercepts all the http requests and inject the token if the request is not the login one.
-In case where the token expired the interceptor will perform a new login in order to retrieve the new token (which will be added to the state as well).
+Note: JWT token received from the backend will be injected through an interceptor which intercepts all the http requests and inject the token (if the request is not the login one).
+In case where the token expired the interceptor will perform a new login call in order to retrieve the new token (which will be added to the state as well).

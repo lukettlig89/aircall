@@ -1,4 +1,38 @@
 <h2 uitestid="call-detail">Call detail:</h2>
 
+<div class="call-container">
+  <ng-container *ngIf="call; else notFound">
+    <mat-card class="call-card">
+      <mat-card-content>
+        <div class="row">
+          <call-cell title="Type:" [value]="call.call_type"></call-cell>
+          <call-cell title="Direction:" [value]="call.direction"></call-cell>
+        </div>
+        <div class="row">
+          <call-cell title="From:" [value]="call.from"></call-cell>
+          <call-cell title="To:" [value]="call.to"></call-cell>
+        </div>
+        <div class="row">
+          <call-cell title="Via:" [value]="call.via"></call-cell>
+          <call-cell title="Duration:" [value]="call.duration | formatDuration"></call-cell>
+        </div>
+        <div class="row">
+          <ng-container *ngFor="let note of call.notes; let isLast = last">
+            <p>{{ note.content }}</p>
+            <mat-divider *ngIf="!isLast"></mat-divider>
+          </ng-container>
+        </div>
+      </mat-card-content>
 
-<!-- TODO call/:id endpoint returns always 404 -->
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="archive()">{{ call.is_archived ? 'Unarchive' : 'Archive'}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+
+
+</div>
+
+<ng-template #notFound>
+  <img src="https://www.artzstudio.com/wp-content/uploads/2020/05/404-error-not-found-page-lost.png" width="700" />
+</ng-template>
